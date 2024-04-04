@@ -1,6 +1,6 @@
 import pickle
 from translator import TranslationHistory
-
+import typing
 
 class User:
     users_list = []
@@ -13,7 +13,7 @@ class User:
         self.name = new_name
 
     @classmethod
-    def find_user_by_name(cls, name):
+    def find_user_by_name(cls, name) -> typing.Self:
         for user in User.users_list:
             if user.name == name:
                 return user
@@ -40,7 +40,7 @@ class User:
     @classmethod
     def save_users_list(cls):
         with open("users_list.pickle", "wb") as db_file:
-            pickle.dump(User.users_list, db_file)
+            pickle.dump(cls.users_list, db_file)
 
     def __str__(self):
         return self.name
