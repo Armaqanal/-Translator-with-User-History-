@@ -1,0 +1,60 @@
+import pickle
+from translator import TranslationHistory
+
+
+class User:
+    users_list = []
+
+    def __init__(self, name):
+        self.name = name
+        self.histories = []
+
+    def edit_user(self, new_name):
+        self.name = new_name
+
+    @classmethod
+    def find_user_by_name(cls, name):
+        for user in User.users_list:
+            if user.name == name:
+                return user
+        raise  # TODO
+
+    @classmethod
+    def add_user(cls, user):
+        if isinstance(user, cls):
+            user.users_list.append(user)
+
+    @classmethod
+    def delete_user(cls, user):
+        User.users_list.remove(user)
+
+    def add_new_history(self, history):
+        if isinstance(history, TranslationHistory):
+            self.histories.append(history)
+
+    @classmethod
+    def load_users_list(cls):
+        with open("users_list.pickle", "rb") as db_file:
+            User.users_list = pickle.load(db_file)
+
+    @classmethod
+    def save_users_list(cls):
+        with open("users_list.pickle", "wb") as db_file:
+            pickle.dump(User.users_list, db_file)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return str(self)
+
+
+if __name__ == "__main__":
+    # user1 = User("Armaqan")
+    # User.add_user(user1)
+    # user = User.find_user_by_name("Armaqan")
+    # user.edit_user("Arma")
+    # print(User.users_list)
+    # User.save_users_list()
+    User.load_users_list()
+    print(User.users_list)
