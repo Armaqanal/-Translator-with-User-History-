@@ -1,6 +1,8 @@
 import pickle
 from translator import TranslationHistory
 import typing
+# import json
+
 
 class User:
     users_list = []
@@ -42,6 +44,15 @@ class User:
         with open("users_list.pickle", "wb") as db_file:
             pickle.dump(cls.users_list, db_file)
 
+    def post_data(self):
+        pass
+
+    def convert_user_to_json(self):
+        data = self.__dict__
+        print(data)
+
+    # def get
+
     def __str__(self):
         return self.name
 
@@ -58,3 +69,5 @@ if __name__ == "__main__":
     # User.save_users_list()
     User.load_users_list()
     print(User.users_list)
+    user = User.users_list[0]
+    print(user.convert_user_to_json())
